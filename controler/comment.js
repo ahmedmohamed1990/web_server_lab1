@@ -1,5 +1,5 @@
 const Comment = require('../model/Comments');
-
+const { catchAsync } = require('../utils/util');
 module.exports = {
   findcommentByID: async (req, res) => {
     const { id } = req.params;
@@ -11,6 +11,12 @@ module.exports = {
       data: comment,
     })
   },
+  getCommentByID: catchAsync(async (req, res) => {
+    res.json({
+      status: 'success',
+      data: req.comment,
+    });
+  }),
   getAllComments: async (req, res) => {
     const comments = await  Comment.find();
     res.json({

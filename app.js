@@ -62,6 +62,11 @@ app.get("/", function (req, res) {
   ]);
 });
 
-app.listen(8000, () => {
-  console.log(" server is listening !");
-});
+const { PORT, HOST, DB_URL } = process.env;
+mongoose
+.connect(DB_URL)
+.then(()=>{console.log('DB connect');})
+.catch((err)=>{console.error('connect failed=>',err);});
+app.listen(PORT,HOST,()=>{
+    console.log("listening");
+})
