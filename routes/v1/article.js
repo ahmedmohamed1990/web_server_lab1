@@ -7,6 +7,7 @@ const {
   updateArticle,
   deleteArticle,
   findArticleByID,
+  getArticleComments,
 } = require('../../controler/article');
 
 
@@ -14,5 +15,6 @@ const {
 router.route('/').get(getAllArticles).post(createArticle);
 router.get('/:id', findArticleByID);
 router.route('/:id').get(getArticleByID).patch(updateArticle).delete(deleteArticle);
+router.get("/:id/comments",getArticleComments );
 
 module.exports = router;

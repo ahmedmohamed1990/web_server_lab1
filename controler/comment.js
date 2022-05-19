@@ -1,5 +1,6 @@
 const Comment = require('../model/Comments');
 const { catchAsync } = require('../utils/util');
+const ARTICLE = require('../model/Article');
 module.exports = {
   findcommentByID: async (req, res) => {
     const { id } = req.params;
@@ -24,13 +25,18 @@ module.exports = {
       data: comments,
     });
   },
-  createComment: async (req, res) => {
-    const { username, content,date } = req.body;
+  createComment: async (req, res,next) => {
+    const { username, content,date,article } = req.body;
+    const articleRelated = await ARTICLE.findById(article);
+  if (!articleRelated) next();
     const comment = await  Comment.create({
         content,
         username,
         date,
+        article,
     });
+    articleRelated.comments.push(comment);
+    await articleRelated.save();
     res.json({
       status: 'comment is create success',
       data: comment,

@@ -1,7 +1,7 @@
 
-const { Schema, model,mongoose  } = require('mongoose');
+const mongoose = require('mongoose');
 
-const articleSchema = new Schema({
+const articleSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, 'article title must be required'],
@@ -13,14 +13,15 @@ const articleSchema = new Schema({
   },
   comments: [
     {
-      comment: {
+      
         type: mongoose.Types.ObjectId,
         required: [true, "comment required"],
         ref: "Comment",
-      },
+        
+     
     },
   ],
 });
 
-const Article = model('Article', articleSchema);
+const Article = mongoose.model('Article', articleSchema);
 module.exports = Article;

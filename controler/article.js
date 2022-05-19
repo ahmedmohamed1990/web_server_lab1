@@ -45,7 +45,7 @@ module.exports = {
       status: 'success',
       data: article,
     });
-    console.log('user updated');
+    console.log('article updated');
   }),
   deleteArticle: catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -53,4 +53,18 @@ module.exports = {
     res.status(204).json({ message: 'Success' });
     console.log('user deleted');
   }),
+   getArticleComments : catchAsync (async(req, res) => {
+    try {
+      const { comments } = res.article;
+
+      const commentsList = await COMMENT.find({ _id: { $in: comments } });
+      res.status(200).json(commentsList);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }),
+ 
+
+
+  
 };

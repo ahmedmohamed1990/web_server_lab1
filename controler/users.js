@@ -50,10 +50,11 @@ module.exports = {
     });
   },
   susbend:async(req,res,next)=>{
-    const updatedUser = await User.findByIdAndUpdate(req.user.id, {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
        $set: {isSuspended: true} , 
-             new: true 
-    });
+            
+    },{ new: true }
+    );
     res.status(200).json({
       status: 'user is susbend',
       data: {
@@ -62,10 +63,12 @@ module.exports = {
     });
   },
   unsusbend:async(req,res,next)=>{
-    const updatedUser = await User.findByIdAndUpdate(req.user.id, {
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
        $set: {isSuspended: false} , 
-             new: true 
-    });
+             
+    }
+    ,{ new: true });
     res.status(200).json({
       status: 'user is unsusbend',
       data: {
